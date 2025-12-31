@@ -1,7 +1,7 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
-   Name = "No im not a human Morphs Unlocker",
-   Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+   Name = "NO I'M NOT A HUMAN MENU",
+   Icon = code, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
    LoadingTitle = "Loading...",
    LoadingSubtitle = "by Semyon",
    Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
@@ -260,83 +260,127 @@ local PlayerTab = Window:CreateTab("Show Players Roles", "eye")
 local Button = PlayerTab:CreateButton({
  Name = "Show Roles",
    Callback = function()
-   local Players = game:GetService("Players")
+  local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
 
-local vipLabel = workspace:GetChildren()[272].HumanoidRootPart.VIPLabel
-local vipTextLabel = vipLabel:FindFirstChildWhichIsA("TextLabel")
+local LABEL_SETTINGS = {
+    Size = UDim2.new(4.2, 0, 1.3, 0),
+    StudsOffset = Vector3.new(0, 3.3, 0),
+    AlwaysOnTop = true,
+    MaxDistance = 90,
+    LightInfluence = 0,
+    TextSize = 26,
+    Font = Enum.Font.GothamBold,
+    TextStrokeTransparency = 0.6,
+    TextStrokeColor3 = Color3.fromRGB(0, 0, 0),
+    BackgroundTransparency = 1
+}
 
 local roleColors = {
-    Character = Color3.fromRGB(0, 0, 255),
-    Survivor = Color3.fromRGB(0, 255, 0),
-    Visitor = Color3.fromRGB(255, 0, 0)
+    ["Character"] = Color3.fromRGB(60, 160, 255),
+    ["Survivor"]  = Color3.fromRGB(40, 255, 100),
+    ["Visitor"]   = Color3.fromRGB(255, 70, 70),
+    ["VIP"]       = Color3.fromRGB(255, 215, 0)
 }
 
 local function createRoleLabel(player)
-    if player.Character and player.Character:FindFirstChild("Head") then
-        for _, obj in pairs(player.Character:GetDescendants()) do
-            if obj.Name == "RoleLabel" then
-                obj:Destroy()
-            end
+    if player == LocalPlayer then return end
+    
+    local character = player.Character
+    if not character then return end
+    
+    local head = character:FindFirstChild("Head")
+    if not head then return end
+    
+    for _, child in head:GetChildren() do
+        if child.Name == "RoleLabel" and child:IsA("BillboardGui") then
+            child:Destroy()
         end
-        
-        local billboard = Instance.new("BillboardGui")
-        billboard.Name = "RoleLabel"
-        billboard.Adornee = player.Character.Head
-        billboard.Size = vipLabel.Size
-        billboard.StudsOffset = vipLabel.StudsOffset
-        billboard.AlwaysOnTop = vipLabel.AlwaysOnTop
-        billboard.Active = vipLabel.Active
-        billboard.ClipsDescendants = vipLabel.ClipsDescendants
-        billboard.LightInfluence = vipLabel.LightInfluence
-        billboard.MaxDistance = vipLabel.MaxDistance
-        billboard.SizeOffset = vipLabel.SizeOffset
-        
-        local label = Instance.new("TextLabel")
-        label.Size = vipTextLabel.Size
-        label.Position = vipTextLabel.Position
-        label.AnchorPoint = vipTextLabel.AnchorPoint
-        label.Text = player.PlayerRole.Value
-        label.TextColor3 = roleColors[player.PlayerRole.Value] or vipTextLabel.TextColor3
-        label.BackgroundColor3 = vipTextLabel.BackgroundColor3
-        label.BackgroundTransparency = vipTextLabel.BackgroundTransparency
-        label.BorderColor3 = vipTextLabel.BorderColor3
-        label.BorderSizePixel = vipTextLabel.BorderSizePixel
-        label.TextSize = vipTextLabel.TextSize
-        label.TextScaled = vipTextLabel.TextScaled
-        label.TextWrapped = vipTextLabel.TextWrapped
-        label.Font = vipTextLabel.Font
-        label.TextStrokeColor3 = vipTextLabel.TextStrokeColor3
-        label.TextStrokeTransparency = vipTextLabel.TextStrokeTransparency
-        label.Parent = billboard
-        
-        billboard.Parent = player.Character.Head
     end
+    
+    local playerRole = player:FindFirstChild("PlayerRole")
+    local roleName = playerRole and playerRole.Value or "Unknown"
+    
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "RoleLabel"
+    billboard.Adornee = head
+    billboard.Size = LABEL_SETTINGS.Size
+    billboard.StudsOffset = LABEL_SETTINGS.StudsOffset
+    billboard.AlwaysOnTop = LABEL_SETTINGS.AlwaysOnTop
+    billboard.MaxDistance = LABEL_SETTINGS.MaxDistance
+    billboard.LightInfluence = LABEL_SETTINGS.LightInfluence
+    billboard.ResetOnSpawn = false
+    
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1, 0, 1, 0)
+    label.BackgroundTransparency = LABEL_SETTINGS.BackgroundTransparency
+    label.Text = roleName
+    label.TextColor3 = roleColors[roleName] or Color3.fromRGB(200, 200, 200)
+    label.TextSize = LABEL_SETTINGS.TextSize
+    label.Font = LABEL_SETTINGS.Font
+    label.TextStrokeTransparency = LABEL_SETTINGS.TextStrokeTransparency
+    label.TextStrokeColor3 = LABEL_SETTINGS.TextStrokeColor3
+    label.TextXAlignment = Enum.TextXAlignment.Center
+    label.TextYAlignment = Enum.TextYAlignment.Center
+    label.Parent = billboard
+    
+    billboard.Parent = head
 end
 
-for _, player in pairs(Players:GetPlayers()) do
-    if player ~= Players.LocalPlayer then
+local function refreshPlayerLabel(player)
+    if player.Character then
         createRoleLabel(player)
-        player.PlayerRole.Changed:Connect(function()
-            createRoleLabel(player)
+    end
+end
+
+local function setupPlayer(player)
+    if player == LocalPlayer then return end
+    
+    local roleValue = player:WaitForChild("PlayerRole", 10)
+    
+    if roleValue then
+        roleValue.Changed:Connect(function()
+            task.delay(0.1, function()
+                refreshPlayerLabel(player)
+            end)
         end)
-        player.CharacterAdded:Connect(function()
-            wait(1)
-            createRoleLabel(player)
+    end
+    
+    player.CharacterAdded:Connect(function()
+        task.delay(1.2, function()
+            refreshPlayerLabel(player)
+        end)
+    end)
+    
+    task.delay(1.5, function()
+        refreshPlayerLabel(player)
+    end)
+end
+
+local function refreshAll()
+    for _, player in Players:GetPlayers() do
+        task.spawn(function()
+            refreshPlayerLabel(player)
         end)
     end
 end
 
-Players.PlayerAdded:Connect(function(player)
-    if player ~= Players.LocalPlayer then
-        player.CharacterAdded:Connect(function()
-            wait(1)
-            createRoleLabel(player)
-        end)
-        player.PlayerRole.Changed:Connect(function()
-            createRoleLabel(player)
-        end)
+for _, player in Players:GetPlayers() do
+    task.spawn(function()
+        setupPlayer(player)
+    end)
+end
+
+Players.PlayerAdded:Connect(setupPlayer)
+
+task.spawn(function()
+    while true do
+        task.wait(8)
+        refreshAll()
     end
 end)
+
+task.delay(20, refreshAll)
 
  end,
 })
