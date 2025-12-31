@@ -34,8 +34,8 @@ local Window = Rayfield:CreateWindow({
 })
 
 local PlayerTab = Window:CreateTab("UPDATE LOGS / INFO", "square-pen")
-local PlyerParagraph = PlayerTab:CreateParagraph({Title = "LAST UPDATE 📃", Content = "11/04/2025"})
-local PlyerParagraph = PlayerTab:CreateParagraph({Title = "WHAT'S NEW? ✨", Content = "ADDED VIGILANTE / ADDED ROLES TAG FOR PLAYERS / ADDED Ability to Get CASH / ADDED CHOOSE ROLE"})
+local PlyerParagraph = PlayerTab:CreateParagraph({Title = "LAST UPDATE 📃", Content = "12/31/2025"})
+local PlyerParagraph = PlayerTab:CreateParagraph({Title = "WHAT'S NEW? ✨", Content = "ADDED GOLDEN MORPHS / ADDED HALLOWEEN MORPS / ADDED UNLISTED BABY MORPH"})
 local Label = PlayerTab:CreateLabel("Semyon", "user-round-cog")
 local Label = PlayerTab:CreateLabel("Rayfield UI", "paint-roller")
 
@@ -59,6 +59,155 @@ game.ReplicatedStorage.EventsFolder.SetStrikerRole:FireServer()
 })
 local PlyerParagraph = PlayerTab:CreateParagraph({Title = "⚠️⚠️⚠️", Content = "MAKE SURE TO RESET IF YOU WANNA SET ONE OF THOSE MORPHS"})
 local PlyerParagraph = PlayerTab:CreateParagraph({Title = "⚠️⚠️⚠️", Content = "MAKE SURE TO BE A -VISITOR/SURVIVOR- FOR THIS TO WORK"})
+
+local Paragraph = PlayerTab:CreateParagraph({Title = "", Content = ""})
+local Paragraph = PlayerTab:CreateParagraph({Title = "", Content = ""})
+local Label = PlayerTab:CreateLabel("Golden Morphs", "star")
+
+local Button = PlayerTab:CreateButton({
+   Name = "GoldenAmogus",
+   Callback = function()
+   local args = {
+	"GoldenAmogus"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("EventsFolder"):WaitForChild("SetMorph"):FireServer(unpack(args))
+
+   end,
+})
+
+local Button = PlayerTab:CreateButton({
+   Name = "GoldenRastaman",
+   Callback = function()
+   local args = {
+	"GoldenRastaman"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("EventsFolder"):WaitForChild("SetMorph"):FireServer(unpack(args))
+
+   end,
+})
+
+local Button = PlayerTab:CreateButton({
+   Name = "GoldenSkely",
+   Callback = function()
+   local args = {
+	"GoldenSkely"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("EventsFolder"):WaitForChild("SetMorph"):FireServer(unpack(args))
+
+   end,
+})
+
+local Button = PlayerTab:CreateButton({
+   Name = "GoldenGeniy",
+   Callback = function()
+   local args = {
+	"GoldenGeniy"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("EventsFolder"):WaitForChild("SetMorph"):FireServer(unpack(args))
+
+   end,
+})
+
+local Button = PlayerTab:CreateButton({
+   Name = "GoldenWireFace",
+   Callback = function()
+   local args = {
+	"GoldenWireFace"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("EventsFolder"):WaitForChild("SetMorph"):FireServer(unpack(args))
+
+   end,
+})
+
+local Button = PlayerTab:CreateButton({
+   Name = "GoldenHalat",
+   Callback = function()
+   local args = {
+	"GoldenHalat"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("EventsFolder"):WaitForChild("SetMorph"):FireServer(unpack(args))
+
+   end,
+})
+
+local Paragraph = PlayerTab:CreateParagraph({Title = "", Content = ""})
+local Label = PlayerTab:CreateLabel("Halloween Morphs", "candy")
+
+local Button = PlayerTab:CreateButton({
+   Name = "TonkiHelloween",
+   Callback = function()
+   local args = {
+	"TonkiHelloween"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("EventsFolder"):WaitForChild("SetMorph"):FireServer(unpack(args))
+
+   end,
+})
+
+local Button = PlayerTab:CreateButton({
+   Name = "SkelyHelloween",
+   Callback = function()
+   local args = {
+	"SkelyHelloween"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("EventsFolder"):WaitForChild("SetMorph"):FireServer(unpack(args))
+
+   end,
+})
+local Button = PlayerTab:CreateButton({
+   Name = "RastamanHelloween",
+   Callback = function()
+   local args = {
+	"RastamanHelloween"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("EventsFolder"):WaitForChild("SetMorph"):FireServer(unpack(args))
+
+   end,
+})
+local Button = PlayerTab:CreateButton({
+   Name = "FortuneWomanHelloween",
+   Callback = function()
+   local args = {
+	"FortuneWomanHelloween"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("EventsFolder"):WaitForChild("SetMorph"):FireServer(unpack(args))
+
+   end,
+})
+local Button = PlayerTab:CreateButton({
+   Name = "JacketHelloween",
+   Callback = function()
+   local args = {
+	"JacketHelloween"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("EventsFolder"):WaitForChild("SetMorph"):FireServer(unpack(args))
+
+   end,
+})
+local Button = PlayerTab:CreateButton({
+   Name = "WireFaceHelloween",
+   Callback = function()
+   
+local args = {
+	"WireFaceHelloween"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("EventsFolder"):WaitForChild("SetMorph"):FireServer(unpack(args))
+
+   end,
+})
+
+local Paragraph = PlayerTab:CreateParagraph({Title = "", Content = "Unlisted Baby Morph"})
+local Button = PlayerTab:CreateButton({
+   Name = "Baby Morph",
+   Callback = function()
+   
+local args = {
+	"Baby"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("EventsFolder"):WaitForChild("SetMorph"):FireServer(unpack(args))
+
+   end,
+})
 
 local PlayerTab = Window:CreateTab("Force Roles", "square-stack")
 local Button = PlayerTab:CreateButton({
